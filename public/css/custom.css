@@ -1,0 +1,40 @@
+.rounded-15 {
+  border-radius: 15px;
+}
+
+.rounded-15-top {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.fs-smaller {
+  font-size: 0.8rem;
+}
+
+.card-hover-img img {
+  transition: all 0.2s ease-in-out;
+}
+
+.card-hover-img img:hover {
+  transform: scale(1.05);
+}
+
+.desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.movie-img {
+  width: 70%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vertical-center {
+  min-height: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
