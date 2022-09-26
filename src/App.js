@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Error from "./components/Error/Error.js";
 import Header from "./components/Header/Header.js";
-import Footer from "./components/Footer/Footer";
+// import Footer from "./components/Footer/Footer";
 import Home from "./components/Home/Home.js";
 import Signup from "./components/Auth/Signup.js";
 import Signin from "./components/Auth/Signin.js";
