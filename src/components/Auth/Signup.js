@@ -117,8 +117,19 @@ const Signup = () => {
                 <button
                   type="submit"
                   className="btn btn-primary rounded border-0 shadow w-100"
+                  disabled={error ? true : false}
                 >
-                  Sign Up
+                  {loading ? (
+                    <Fragment>
+                      <div
+                        class="spinner-border spinner-border-sm me-2"
+                        role="status"
+                      ></div>
+                      {error ? error : "Sign Up"}
+                    </Fragment>
+                  ) : (
+                    <Fragment>{error ? error : "Sign Up"}</Fragment>
+                  )}
                 </button>
               </form>
 

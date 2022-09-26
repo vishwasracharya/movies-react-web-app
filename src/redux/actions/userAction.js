@@ -62,6 +62,7 @@ const signUp = (firstName, lastName, email, password) => async (dispatch) => {
     localStorage.setItem(
       "user",
       JSON.stringify({
+        _id: data.data.user._id,
         firstName: data.data.user.firstName,
         lastName: data.data.user.lastName,
         email: data.data.user.email,
@@ -85,6 +86,7 @@ const signUp = (firstName, lastName, email, password) => async (dispatch) => {
 const logout = () => async (dispatch) => {
   try {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     dispatch({
       type: USER_LOGOUT_SUCCESS,
