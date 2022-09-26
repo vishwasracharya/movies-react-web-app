@@ -1,45 +1,66 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import axios from "axios";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { getMovieDetails } from "../../../redux/actions/movieAction.js";
+import { getUserDetails } from "../../../redux/actions/movieAction.js";
 
 export const Rent = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   const { id } = useParams();
   const dispatch = useDispatch();
   const { movie } = useSelector((state) => state.movieDetails);
   useEffect(() => {
     dispatch(getMovieDetails(id));
-  }, [dispatch, id]);
+    dispatch(getUserDetails(user._id));
+  }, [dispatch, id, user._id]);
+
+  const [rented, setRented] = useState(false);
+
+  const handleRentMovie = (e) => {
+    e.preventDefault();
+    axios
+      .post(`/api/rent-movie/${id}/${user._id}`, {})
+      .then((res) => {
+        setRented(true);
+        window.location.href = "/";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <Fragment>
-      <section class="my-5">
-        <div class="container">
-          <div class="row">
-            <div class="col-12 col-md-3 mx-auto mb-3 mb-md-0">
+      <section className="my-5">
+        <div className="container">
+          <div className="row">
+            <div className="col-12 col-md-3 mx-auto mb-3 mb-md-0">
               <img
-                class="img-fluid rounded-15 shadow"
+                className="img-fluid rounded-15 shadow"
                 id="movieImage"
                 src={movie.image}
                 alt={movie.title}
                 title={movie.title}
               />
             </div>
-            <div class="col-12 col-md-9 mx-auto mb-3 mb-md-0">
-              <h1 class="text-dark mb-3">{movie.title}</h1>
-              <p class="fs-6 text-muted mb-2">
+            <div className="col-12 col-md-9 mx-auto mb-3 mb-md-0">
+              <h1 className="text-dark mb-3">{movie.title}</h1>
+              <p className="fs-6 text-muted mb-2">
                 <strong>Rate:</strong> ${movie.price}/m{" "}
               </p>
-              <p class="fs-6 text-muted mb-2">
+              <p className="fs-6 text-muted mb-2">
                 <strong>Available Quantity:</strong> {movie.quantity}
               </p>
               <button
-                class="btn btn-info rounded border-0 shadow lh-1"
-                onclick="handleRentMovie(event)"
+                className="btn btn-info rounded border-0 shadow lh-1"
+                onClick={handleRentMovie}
+                {...(movie.quantity <= 0 ? { disabled: true } : {})}
+                {...(rented ? { disabled: true } : {})}
               >
-                Get Movie
+                {rented ? "Rented" : "Get Movie"}
               </button>
             </div>
           </div>

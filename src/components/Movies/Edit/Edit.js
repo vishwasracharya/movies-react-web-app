@@ -1,4 +1,5 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
+import axios from "axios";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -9,149 +10,204 @@ export const Edit = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { movie } = useSelector((state) => state.movieDetails);
+
+  const title = useRef();
+  const description = useRef();
+  const director = useRef();
+  const genre = useRef();
+  const rating = useRef();
+  const image = useRef();
+  const year = useRef();
+  const price = useRef();
+  const quantity = useRef();
+
   useEffect(() => {
     dispatch(getMovieDetails(id));
   }, [dispatch, id]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submit");
+    const UpdatedMovie = {
+      title: title.current.value,
+      description: description.current.value,
+      director: director.current.value,
+      genre: genre.current.value,
+      rating: rating.current.value,
+      image: image.current.value,
+      year: year.current.value,
+      price: price.current.value,
+      quantity: quantity.current.value,
+    };
+
+    axios
+      .post(`/api/edit-movie/${id}`, UpdatedMovie, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <Fragment>
-      <section class="my-5">
-        <div class="container">
-          <div class="row">
-            <div class="col-12 col-md-3 mx-auto mb-3 mb-md-0">
+      <section className="my-5">
+        <div className="container">
+          <div className="row">
+            <div className="col-12 col-md-3 mx-auto mb-3 mb-md-0">
               <img
-                class="img-fluid rounded-15 shadow"
+                className="img-fluid rounded-15 shadow"
                 id="movieImage"
                 src={movie.image}
                 alt={movie.title}
                 title={movie.title}
               />
             </div>
-            <div class="col-12 col-md-8 mx-auto mb-3 mb-md-0">
+            <div className="col-12 col-md-8 mx-auto mb-3 mb-md-0">
               <form
-                action="<%=site_url%>/api/edit-movie/<%=movie._id%>"
+                action={`/api/edit-movie/${id}`}
                 method="POST"
+                onSubmit={handleSubmit}
               >
-                <div class="form-group mb-3">
-                  <div class="row">
-                    <div class="col-12 col-md-6 mb-3 mb-md-0">
-                      <label for="title">Title</label>
+                <div className="form-group mb-3">
+                  <div className="row">
+                    <div className="col-12 col-md-6 mb-3 mb-md-0">
+                      <label htmlFor="title">Title</label>
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="title"
                         name="title"
                         placeholder="Enter title"
-                        value={movie.title}
+                        defaultValue={movie.title}
+                        ref={title}
                         required
                       />
                     </div>
-                    <div class="col-12 col-md-6">
-                      <label for="rating">Rating</label>
+                    <div className="col-12 col-md-6">
+                      <label htmlFor="rating">Rating</label>
                       <input
                         type="number"
-                        class="form-control"
+                        className="form-control"
                         id="rating"
                         name="rating"
                         min="1"
                         max="5"
                         placeholder="Enter rating (1-5)"
-                        value={movie.rating}
+                        defaultValue={movie.rating}
+                        ref={rating}
                         required
                       />
                     </div>
                   </div>
                 </div>
-                <div class="form-group mb-3">
-                  <label for="genre">Genre</label>
+                <div className="form-group mb-3">
+                  <label htmlFor="genre">Genre</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="genre"
                     name="genre"
                     placeholder="Enter genre"
-                    value={movie.genre}
+                    defaultValue={movie.genre}
+                    ref={genre}
                     required
                   />
                 </div>
-                <div class="form-group mb-3">
-                  <div class="row">
-                    <div class="col-12 col-md-6 mb-3 mb-md-0">
-                      <label for="director">Director</label>
+                <div className="form-group mb-3">
+                  <div className="row">
+                    <div className="col-12 col-md-6 mb-3 mb-md-0">
+                      <label htmlFor="director">Director</label>
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="director"
                         name="director"
                         placeholder="Enter Director"
-                        value={movie.director}
+                        defaultValue={movie.director}
+                        ref={director}
                         required
                       />
                     </div>
-                    <div class="col-12 col-md-6">
-                      <label for="year">Year</label>
+                    <div className="col-12 col-md-6">
+                      <label htmlFor="year">Year</label>
                       <input
                         type="number"
-                        class="form-control"
+                        className="form-control"
                         id="year"
                         name="year"
                         placeholder="Enter Year (2022)"
-                        value={movie.year}
+                        defaultValue={movie.year}
+                        ref={year}
                         required
                       />
                     </div>
                   </div>
                 </div>
-                <div class="form-group mb-3">
-                  <label for="image">Image Link</label>
+                <div className="form-group mb-3">
+                  <label htmlFor="image">Image Link</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="image"
                     name="image"
                     placeholder="Paste Image Link here"
-                    value={movie.image}
-                    onkeyup="updateImageView(event)"
+                    defaultValue={movie.image}
+                    ref={image}
+                    onKeyUp={() => {
+                      document.getElementById("movieImage").src =
+                        image.current.value;
+                    }}
                     required
                   />
                 </div>
-                <div class="form-group mb-3">
-                  <label for="description">description</label>
+                <div className="form-group mb-3">
+                  <label htmlFor="description">description</label>
                   <textarea
-                    class="form-control"
+                    className="form-control"
                     id="description"
                     name="description"
                     rows="3"
                     placeholder="Description Here"
                     style={{ resize: "none" }}
                     required
-                  >
-                    {movie.description}
-                  </textarea>
+                    defaultValue={movie.description}
+                    ref={description}
+                  ></textarea>
                 </div>
-                <div class="form-group mb-3">
-                  <div class="row">
-                    <div class="col-12 col-md-6 mb-3 mb-md-0">
-                      <label for="price">Price</label>
+                <div className="form-group mb-3">
+                  <div className="row">
+                    <div className="col-12 col-md-6 mb-3 mb-md-0">
+                      <label htmlFor="price">Price</label>
                       <input
                         type="number"
-                        class="form-control"
+                        className="form-control"
                         id="price"
                         name="price"
                         placeholder="Enter Price"
-                        value={movie.price}
+                        defaultValue={movie.price}
+                        ref={price}
                         required
                       />
                     </div>
-                    <div class="col-12 col-md-6 mb-3 mb-md-0">
-                      <label for="quantity">Quantity</label>
+                    <div className="col-12 col-md-6 mb-3 mb-md-0">
+                      <label htmlFor="quantity">Quantity</label>
                       <input
                         type="number"
-                        class="form-control"
+                        className="form-control"
                         id="quantity"
                         name="quantity"
                         placeholder="Enter Quantity"
-                        value={movie.quantity}
+                        defaultValue={movie.quantity}
+                        ref={quantity}
                         required
                       />
                     </div>
@@ -159,7 +215,7 @@ export const Edit = () => {
                 </div>
                 <button
                   type="submit"
-                  class="btn btn-warning rounded border-0 shadow lh-1"
+                  className="btn btn-warning rounded border-0 shadow lh-1"
                 >
                   Update
                 </button>

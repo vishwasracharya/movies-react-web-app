@@ -1,11 +1,11 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams, Navigate } from "react-router-dom";
 
 import { Auth } from "../../../controllers/auth.js";
 import { getUserDetails } from "../../../redux/actions/movieAction.js";
 
-import Movie from "../../Movies/Movie/Movie.js";
+import Movie from "../Movie/Movie.js";
 import Metadata from "../../Metadata/Metadata.js";
 import Loader from "../../Loader/Loader.js";
 
@@ -26,7 +26,7 @@ const UserDetails = () => {
           ) : (
             <Fragment>
               <Metadata title="Home | Vishwas Acharya" />
-              {movies.movies.length > 0 ? (
+              {movies.movies ? (
                 <section className="my-5">
                   <div className="container">
                     <div className="row">
@@ -36,7 +36,7 @@ const UserDetails = () => {
                             key={movie._id}
                             className="col-12 col-md-6 col-lg-3 mb-4 mx-auto mx-md-0"
                           >
-                            <Movie movie={movie} />
+                            <Movie movie={movie} isRented={true} />
                           </div>
                         ))}
                     </div>
