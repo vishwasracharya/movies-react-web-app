@@ -2,10 +2,12 @@ import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
+import axios from "axios";
 
 import { getMovieDetails } from "../../../redux/actions/movieAction.js";
 
 const MovieDetails = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   const { id } = useParams();
   const dispatch = useDispatch();
   const { movie } = useSelector((state) => state.movieDetails);
@@ -20,6 +22,21 @@ const MovieDetails = () => {
     size: window.innerWidth < 768 ? 20 : 25,
     isHalf: true,
     value: movie.rating,
+  };
+
+  const handleDeleteMovie = (e) => {
+    e.preventDefault();
+    axios
+      .delete(`/api/delete-movie/${id}`)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          window.location.href = "/";
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -60,12 +77,14 @@ const MovieDetails = () => {
               >
                 Rent
               </Link>
-              {/* <button
-                    className="btn btn-danger rounded border-0 shadow lh-1 mx-2"
-                    onclick="handleDeleteMovie(event)"
-                  >
-                    Delete
-                  </button> */}
+              {user.isAdmin && (
+                <button
+                  className="btn btn-danger rounded border-0 shadow lh-1 mx-2"
+                  onClick={handleDeleteMovie}
+                >
+                  Delete
+                </button>
+              )}
             </div>
           </div>
         </div>
