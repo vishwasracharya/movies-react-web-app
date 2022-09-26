@@ -50,7 +50,7 @@ const Signup = () => {
                 <div className="form-group mb-3">
                   <div className="row">
                     <div className="col-12 col-md-6 mb-3 mb-md-0">
-                      <label for="firstName">First Name</label>
+                      <label htmlFor="firstName">First Name</label>
                       <input
                         type="text"
                         className="form-control"
@@ -63,7 +63,7 @@ const Signup = () => {
                       />
                     </div>
                     <div className="col-12 col-md-6">
-                      <label for="lastName">Last Name</label>
+                      <label htmlFor="lastName">Last Name</label>
                       <input
                         type="text"
                         className="form-control"
@@ -78,7 +78,7 @@ const Signup = () => {
                   </div>
                 </div>
                 <div className="form-group mb-3">
-                  <label for="email">Email address</label>
+                  <label htmlFor="email">Email address</label>
                   <input
                     type="email"
                     className="form-control"
@@ -91,7 +91,7 @@ const Signup = () => {
                   />
                 </div>
                 <div className="form-group mb-3">
-                  <label for="password">Password</label>
+                  <label htmlFor="password">Password</label>
                   <input
                     type="password"
                     className="form-control"
@@ -104,7 +104,7 @@ const Signup = () => {
                   />
                 </div>
                 <div className="form-group mb-3">
-                  <label for="re-enter-password">Re-enter Password</label>
+                  <label htmlFor="re-enter-password">Re-enter Password</label>
                   <input
                     type="password"
                     className="form-control"

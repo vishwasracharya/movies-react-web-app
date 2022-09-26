@@ -40,7 +40,7 @@ const Signin = () => {
               </div>
               <form action="/auth/signin" method="post" onSubmit={handleSubmit}>
                 <div className="form-group mb-3">
-                  <label for="email">Email address</label>
+                  <label htmlFor="email">Email address</label>
                   <input
                     type="email"
                     className="form-control"
@@ -53,7 +53,7 @@ const Signin = () => {
                   />
                 </div>
                 <div className="form-group mb-3">
-                  <label for="password">Password</label>
+                  <label htmlFor="password">Password</label>
                   <input
                     type="password"
                     className="form-control"
