@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { getMovieDetails } from "../../../redux/actions/movieAction.js";
 
 export const Edit = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   const { id } = useParams();
   const dispatch = useDispatch();
   const { movie } = useSelector((state) => state.movieDetails);
@@ -18,8 +19,8 @@ export const Edit = () => {
   const rating = useRef();
   const image = useRef();
   const year = useRef();
-  const price = useRef();
-  const quantity = useRef();
+  let price = useRef();
+  let quantity = useRef();
 
   useEffect(() => {
     dispatch(getMovieDetails(id));
@@ -28,6 +29,13 @@ export const Edit = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submit");
+    if (!user.isAdmin) {
+      price = movie.price;
+      quantity = movie.quantity;
+    } else {
+      price = price.current.value;
+      quantity = quantity.current.value;
+    }
     const UpdatedMovie = {
       title: title.current.value,
       description: description.current.value,
@@ -36,8 +44,8 @@ export const Edit = () => {
       rating: rating.current.value,
       image: image.current.value,
       year: year.current.value,
-      price: price.current.value,
-      quantity: quantity.current.value,
+      price: price,
+      quantity: quantity,
     };
 
     axios
@@ -183,36 +191,40 @@ export const Edit = () => {
                     ref={description}
                   ></textarea>
                 </div>
-                <div className="form-group mb-3">
-                  <div className="row">
-                    <div className="col-12 col-md-6 mb-3 mb-md-0">
-                      <label htmlFor="price">Price</label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        id="price"
-                        name="price"
-                        placeholder="Enter Price"
-                        defaultValue={movie.price}
-                        ref={price}
-                        required
-                      />
+                {user && user.isAdmin && (
+                  <Fragment>
+                    <div className="form-group mb-3">
+                      <div className="row">
+                        <div className="col-12 col-md-6 mb-3 mb-md-0">
+                          <label htmlFor="price">Price</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            id="price"
+                            name="price"
+                            placeholder="Enter Price"
+                            defaultValue={movie.price}
+                            ref={price}
+                            required
+                          />
+                        </div>
+                        <div className="col-12 col-md-6 mb-3 mb-md-0">
+                          <label htmlFor="quantity">Quantity</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            id="quantity"
+                            name="quantity"
+                            placeholder="Enter Quantity"
+                            defaultValue={movie.quantity}
+                            ref={quantity}
+                            required
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className="col-12 col-md-6 mb-3 mb-md-0">
-                      <label htmlFor="quantity">Quantity</label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        id="quantity"
-                        name="quantity"
-                        placeholder="Enter Quantity"
-                        defaultValue={movie.quantity}
-                        ref={quantity}
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
+                  </Fragment>
+                )}
                 <button
                   type="submit"
                   className="btn btn-warning rounded border-0 shadow lh-1"
