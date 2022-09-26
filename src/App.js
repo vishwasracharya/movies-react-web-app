@@ -13,6 +13,7 @@ import { Edit as MovieEdit } from "./components/Movies/Edit/Edit.js";
 import { Rent as MovieRent } from "./components/Movies/Rent/Rent.js";
 
 import { UserDetails } from "./components/Users/UserDetails/UserDetails.js";
+import { AllUsers } from "./components/Users/AllUsers/AllUsers.js";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/movies/rent/:id" element={<MovieRent />} />
 
         <Route path="/account/:id" element={<UserDetails />} />
+        <Route path="/account/users" element={<AllUsers />} />
 
         <Route path="*" element={<Error />} />
       </Routes>
