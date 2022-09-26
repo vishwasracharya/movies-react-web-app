@@ -1,12 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+
+import { Auth } from "../../controllers/auth";
 
 const Header = () => {
+  const auth = Auth();
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-light">
         <div className="container-fluid">
-          <Link className="navbar-brand" to={'/'}>
+          <Link className="navbar-brand" to={"/"}>
             <img
               loading="eager"
               className="my-auto"
@@ -32,7 +36,7 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link" aria-current="page" to={'/'}>
+                <Link className="nav-link" aria-current="page" to={"/"}>
                   Home
                 </Link>
               </li>
@@ -41,49 +45,59 @@ const Header = () => {
                 <Link
                   className="nav-link"
                   aria-current="page"
-                  to={'/movies/add'}
+                  to={"/movies/add"}
                 >
                   Add Movie
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  aria-current="page"
-                  to={'/auth/SignOut'}
-                >
-                  SignOut
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  aria-current="page"
-                  to={'/auth/SignIn'}
-                >
-                  SignIn
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  aria-current="page"
-                  to={'/auth/SignUp'}
-                >
-                  SignUp
-                </Link>
-              </li>
+
+              {auth ? (
+                <>
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link"
+                      aria-current="page"
+                      to={"/auth/SignOut"}
+                    >
+                      SignOut
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link"
+                      aria-current="page"
+                      to={"/auth/SignIn"}
+                    >
+                      SignIn
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link"
+                      aria-current="page"
+                      to={"/auth/SignUp"}
+                    >
+                      SignUp
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
-          <div className="d-flex">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link" aria-current="page" to={'#'}>
-                  Hello
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {auth ? (
+            <div className="d-flex">
+              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                <li className="nav-item">
+                  <Link className="nav-link" aria-current="page" to={`/account/${user._id}`}>
+                    Hello {user.firstName}
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          ) : null}
         </div>
       </nav>
     </>

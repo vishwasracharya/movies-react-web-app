@@ -1,7 +1,34 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { signUp } from "../../redux/actions/userAction";
+
+import { Auth } from "../../controllers/auth.js";
 
 const Signup = () => {
+  const auth = Auth();
+  const dispatch = useDispatch();
+
+  const { error, loading, isAuthenticated } = useSelector(
+    (state) => state.user
+  );
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(signUp(firstName, lastName, email, password));
+  };
+
+  useEffect(() => {
+    if (isAuthenticated || auth) {
+      window.location.href = "/";
+    }
+  }, [error, loading, isAuthenticated, auth]);
+
   return (
     <Fragment>
       <section className="my-5">
@@ -16,8 +43,9 @@ const Signup = () => {
               </div>
               <form
                 className="mb-4"
-                action="<%=site_url%>/auth/signup"
+                action="/auth/signup"
                 method="post"
+                onSubmit={handleSubmit}
               >
                 <div className="form-group mb-3">
                   <div className="row">
@@ -29,6 +57,8 @@ const Signup = () => {
                         id="firstName"
                         name="firstName"
                         placeholder="Enter First Name"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
                         required
                       />
                     </div>
@@ -40,6 +70,8 @@ const Signup = () => {
                         id="lastName"
                         name="lastName"
                         placeholder="Enter Last Name"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
                         required
                       />
                     </div>
@@ -53,6 +85,8 @@ const Signup = () => {
                     id="email"
                     name="email"
                     placeholder="Enter Email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
@@ -64,6 +98,8 @@ const Signup = () => {
                     id="password"
                     name="password"
                     placeholder="Enter Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                 </div>

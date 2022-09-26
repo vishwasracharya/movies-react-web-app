@@ -6,10 +6,13 @@ import Footer from "./components/Footer/Footer";
 import Home from "./components/Home/Home.js";
 import Signup from "./components/Auth/Signup.js";
 import Signin from "./components/Auth/Signin.js";
+import Signout from "./components/Auth/Signout.js";
 import MovieDetails from "./components/Movies/MovieDetails/MovieDetails.js";
 import { Add as MovieAdd } from "./components/Movies/Add/Add.js";
 import { Edit as MovieEdit } from "./components/Movies/Edit/Edit.js";
 import { Rent as MovieRent } from "./components/Movies/Rent/Rent.js";
+
+import { UserDetails } from "./components/Users/UserDetails/UserDetails.js";
 
 function App() {
   return (
@@ -18,14 +21,16 @@ function App() {
       <Routes>
         <Route path="/auth/signup" element={<Signup />} />
         <Route path="/auth/signin" element={<Signin />} />
-        
+        <Route path="/auth/signout" element={<Signout />} />
+
         <Route path="/" exact element={<Home />} />
         <Route path="/movie/:id" element={<MovieDetails />} />
-        
 
         <Route path="/movies/add" element={<MovieAdd />} />
         <Route path="/movies/edit/:id" element={<MovieEdit />} />
         <Route path="/movies/rent/:id" element={<MovieRent />} />
+
+        <Route path="/account/:id" element={<UserDetails />} />
 
         <Route path="*" element={<Error />} />
       </Routes>

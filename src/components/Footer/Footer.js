@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -7,25 +8,25 @@ const Footer = () => {
         <div className="row mt-3 bg-light footer">
           <div className="d-flex align-items-center justify-content-center">
             <p className="my-2 text-muted" style={{ fontSize: "small" }}>
-              <a
+              <Link
                 className="my-2 text-muted text-decoration-none"
                 style={{ fontSize: "small" }}
-                href="https://vishwasracharya.herokuapp.com"
+                to="/"
                 target="_blank"
                 rel="noreferrer"
               >
                 Vishwas Acharya
-              </a>
+              </Link>
               <span className="text-muted mx-1">&#8226;</span>
-              <a
+              <Link
                 className="my-2 text-muted text-decoration-none"
                 style={{ fontSize: "small" }}
-                href="https://www.buymeacoffee.com/vishwasacharya"
+                to="https://www.buymeacoffee.com/vishwasacharya"
                 target="_blank"
                 rel="noreferrer"
               >
                 Buy me a coffee
-              </a>
+              </Link>
             </p>
           </div>
         </div>

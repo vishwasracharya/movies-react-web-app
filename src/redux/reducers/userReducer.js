@@ -1,6 +1,7 @@
 import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
+  USER_LOGOUT_SUCCESS,
   USER_LOGIN_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants.js";
@@ -28,8 +29,8 @@ const userReducer = (state = initialState, action) => {
         user: null,
         error: action.payload,
       };
-    // case LOGOUT_SUCCESS:
-    //   return { ...state, loading: false, isAuthenticated: false, user: null };
+    case USER_LOGOUT_SUCCESS:
+      return { ...state, loading: false, isAuthenticated: false, user: null };
     case CLEAR_ERRORS:
       return { ...state, error: null };
     default:

@@ -51,3 +51,21 @@ export const clearErrors = () => async (dispatch) => {
     type: CLEAR_ERRORS,
   });
 };
+
+export const getUserDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: MOVIE_LIST_REQUEST });
+
+    const { data } = await axios.get(`/account/${id}`);
+    console.log("TR", data);
+    dispatch({
+      type: MOVIE_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: MOVIE_LIST_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};

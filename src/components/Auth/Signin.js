@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../redux/actions/userAction";
 
-import { Auth } from '../../controllers/auth.js'
+import { Auth } from "../../controllers/auth.js";
 
 const Signin = () => {
   const auth = Auth();
