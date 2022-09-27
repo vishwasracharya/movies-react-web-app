@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useCallBack } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams, Navigate } from "react-router-dom";
 
@@ -14,9 +14,11 @@ const UserDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { movies, loading } = useSelector((state) => state.movies);
+
   useEffect(() => {
     dispatch(getUserDetails(id));
   }, [dispatch, id]);
+
   return (
     <Fragment>
       {auth ? (

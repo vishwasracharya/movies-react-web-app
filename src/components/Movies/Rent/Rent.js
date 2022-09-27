@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -8,28 +8,30 @@ import { getMovieDetails } from "../../../redux/actions/movieAction.js";
 import { getUserDetails } from "../../../redux/actions/movieAction.js";
 
 export const Rent = () => {
+  const [rented, setRented] = useState(false);
+
   const user = JSON.parse(localStorage.getItem("user"));
   const { id } = useParams();
   const dispatch = useDispatch();
   const { movie } = useSelector((state) => state.movieDetails);
+
+  const rentMovie = useCallback(async () => {
+    try {
+      await axios.post(`/api/rent-movie/${id}/${user._id}`);
+      setRented(true);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [id, user._id]);
+
   useEffect(() => {
     dispatch(getMovieDetails(id));
     dispatch(getUserDetails(user._id));
   }, [dispatch, id, user._id]);
 
-  const [rented, setRented] = useState(false);
-
   const handleRentMovie = (e) => {
     e.preventDefault();
-    axios
-      .post(`/api/rent-movie/${id}/${user._id}`, {})
-      .then((res) => {
-        setRented(true);
-        window.location.href = "/";
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    rentMovie();
   };
 
   return (

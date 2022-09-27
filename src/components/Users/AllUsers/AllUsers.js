@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 
@@ -8,29 +8,28 @@ const AllUsers = () => {
   const auth = Auth();
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("/api/all-users")
-      .then((res) => {
-        setUsers(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const fetchUsers = useCallback(async () => {
+    try {
+      const response = await axios.get("/api/all-users");
+      setUsers(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
-  const deleteUser = (id) => {
-    console.log(id);
-    axios
-      .delete(`/account/delete/${id}`)
-      .then((res) => {
-        console.log(res.data);
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
+  const deleteUser = async (id) => {
+    try {
+      await axios.delete(`/account/delete/${id}`);
+      fetchUsers();
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <Fragment>
       {auth ? (

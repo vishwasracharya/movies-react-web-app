@@ -1,4 +1,10 @@
-import React, { Fragment, useEffect, useRef } from "react";
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import axios from "axios";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -19,50 +25,64 @@ export const Edit = () => {
   const rating = useRef();
   const image = useRef();
   const year = useRef();
-  let price = useRef();
-  let quantity = useRef();
+  const price = useRef();
+  const quantity = useRef();
+
+  const [isUpdated, setIsUpdated] = useState(false);
 
   useEffect(() => {
     dispatch(getMovieDetails(id));
   }, [dispatch, id]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("submit");
-    if (!user.isAdmin) {
-      price = movie.price;
-      quantity = movie.quantity;
-    } else {
-      price = price.current.value;
-      quantity = quantity.current.value;
-    }
-    const UpdatedMovie = {
-      title: title.current.value,
-      description: description.current.value,
-      director: director.current.value,
-      genre: genre.current.value,
-      rating: rating.current.value,
-      image: image.current.value,
-      year: year.current.value,
-      price: price,
-      quantity: quantity,
-    };
-
+  // after submit button is clicked this function will be called and it will update the movie details
+  const updateMovie = useCallback(async () => {
     axios
-      .post(`/api/edit-movie/${id}`, UpdatedMovie, {
-        headers: {
-          "Content-Type": "application/json",
+      .post(
+        `/api/edit-movie/${id}`,
+        {
+          title: title.current.value,
+          description: description.current.value,
+          director: director.current.value,
+          genre: genre.current.value,
+          rating: rating.current.value,
+          image: image.current.value,
+          year: year.current.value,
+          price: price.current.value,
+          quantity: quantity.current.value,
         },
-      })
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          window.location.reload();
+          console.log("Movie updated successfully");
+          // window.location.reload();
         }
       })
       .catch((err) => {
         console.log(err);
       });
+    setIsUpdated(true);
+  }, [
+    id,
+    title,
+    description,
+    director,
+    genre,
+    rating,
+    image,
+    year,
+    price,
+    quantity,
+  ]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateMovie();
   };
 
   return (
@@ -170,10 +190,10 @@ export const Edit = () => {
                     placeholder="Paste Image Link here"
                     defaultValue={movie.image}
                     ref={image}
-                    onKeyUp={() => {
+                    onKeyUp={useCallback(() => {
                       document.getElementById("movieImage").src =
                         image.current.value;
-                    }}
+                    }, [image])}
                     required
                   />
                 </div>
@@ -191,45 +211,44 @@ export const Edit = () => {
                     ref={description}
                   ></textarea>
                 </div>
-                {user && user.isAdmin && (
-                  <Fragment>
-                    <div className="form-group mb-3">
-                      <div className="row">
-                        <div className="col-12 col-md-6 mb-3 mb-md-0">
-                          <label htmlFor="price">Price</label>
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="price"
-                            name="price"
-                            placeholder="Enter Price"
-                            defaultValue={movie.price}
-                            ref={price}
-                            required
-                          />
-                        </div>
-                        <div className="col-12 col-md-6 mb-3 mb-md-0">
-                          <label htmlFor="quantity">Quantity</label>
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="quantity"
-                            name="quantity"
-                            placeholder="Enter Quantity"
-                            defaultValue={movie.quantity}
-                            ref={quantity}
-                            required
-                          />
-                        </div>
+                <Fragment>
+                  <div className="form-group mb-3">
+                    <div className="row">
+                      <div className="col-12 col-md-6 mb-3 mb-md-0">
+                        <label htmlFor="price">Price</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="price"
+                          name="price"
+                          placeholder="Enter Price"
+                          defaultValue={movie.price}
+                          ref={price}
+                          {...(user && user.isAdmin ? {} : { disabled: true })}
+                        />
+                      </div>
+                      <div className="col-12 col-md-6 mb-3 mb-md-0">
+                        <label htmlFor="quantity">Quantity</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="quantity"
+                          name="quantity"
+                          placeholder="Enter Quantity"
+                          defaultValue={movie.quantity}
+                          ref={quantity}
+                          {...(user && user.isAdmin ? {} : { disabled: true })}
+                        />
                       </div>
                     </div>
-                  </Fragment>
-                )}
+                  </div>
+                </Fragment>
                 <button
                   type="submit"
                   className="btn btn-warning rounded border-0 shadow lh-1"
+                  {...(isUpdated ? { disabled: true } : {})}
                 >
-                  Update
+                  {isUpdated ? "Updated" : "Update"}
                 </button>
               </form>
             </div>

@@ -1,22 +1,31 @@
-import React from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Movie = ({ movie, isRented }) => {
   const { movies } = useSelector((state) => state.movies);
+
+  const movieLength = movies.movies.length;
+  console.log(movieLength);
+
+  const [movieLengthState, setMovieLengthState] = useState(movieLength);
+
+  const returnMovie = useCallback(async () => {
+    try {
+      await axios.post(`/api/return-movie/${movie._id}/${movies._id}`);
+      setMovieLengthState(movieLengthState - 1);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [movie._id, movies._id, movieLengthState]);
+
   const handleReturn = (e) => {
     e.preventDefault();
-    console.log("Return");
-    axios
-      .post(`/api/return-movie/${movie._id}/${movies._id}`, {})
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    returnMovie();
   };
+
   return (
     <div className="border-0 rounded-15 card-hover-img">
       <div className="p-1 d-flex align-items-center justify-content-center">
