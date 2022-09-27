@@ -56,7 +56,7 @@ export const getUserDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: MOVIE_LIST_REQUEST });
 
-    const { data } = await axios.get(`/account/${id}`);
+    const { data } = await axios.get(`/api/user/${id}`);
     // console.log("TR", data);
     dispatch({
       type: MOVIE_LIST_SUCCESS,
