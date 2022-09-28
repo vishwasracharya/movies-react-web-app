@@ -17,6 +17,7 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isError, setIsError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,6 +29,14 @@ const Signup = () => {
       window.location.href = "/";
     }
   }, [error, loading, isAuthenticated, auth]);
+
+  function handlePasswordMatch (e) {
+    if (e.target.value !== password) {
+      setIsError(true);
+    } else {
+      setIsError(false);
+    }
+  }
 
   return (
     <Fragment>
@@ -107,17 +116,21 @@ const Signup = () => {
                   <label htmlFor="re-enter-password">Re-enter Password</label>
                   <input
                     type="password"
-                    className="form-control"
+                    className="form-control mb-2"
                     id="re-enter-password"
                     name="re-enter-password"
                     placeholder="Re-Enter Password"
+                    onKeyUp={handlePasswordMatch}
                     required
                   />
+                  <p className="text-danger" style={{fontSize: 'small'}}>
+                    {isError ? "Passwords do not match" : ""}
+                  </p>
                 </div>
                 <button
                   type="submit"
                   className="btn btn-primary rounded border-0 shadow w-100"
-                  disabled={error ? true : false}
+                  disabled={error || isError ? true : false}
                 >
                   {loading ? (
                     <Fragment>
