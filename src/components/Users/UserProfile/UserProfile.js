@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
 
 import { Auth } from "../../../controllers/auth.js";
 import { getUser } from "../../../redux/actions/userAction.js";
@@ -17,7 +16,6 @@ const UserProfile = () => {
   const [movies] = useState(user.movies);
 
   const [passwordError, setPasswordError] = useState("");
-
   useEffect(() => {
     dispatch(getUser(id));
   }, [dispatch, id]);

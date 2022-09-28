@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import { Auth } from "../../controllers/auth";
 
+import { Dropdown as DropdownComponent } from "./Dropdown";
+
 const Header = () => {
   const auth = Auth();
   const user = JSON.parse(localStorage.getItem("user"));
@@ -51,19 +53,7 @@ const Header = () => {
                 </Link>
               </li>
 
-              {auth ? (
-                <>
-                  <li className="nav-item">
-                    <Link
-                      className="nav-link"
-                      aria-current="page"
-                      to={"/auth/SignOut"}
-                    >
-                      SignOut
-                    </Link>
-                  </li>
-                </>
-              ) : (
+              {!auth && (
                 <>
                   <li className="nav-item">
                     <Link
@@ -89,17 +79,7 @@ const Header = () => {
           </div>
           {auth ? (
             <div className="d-flex">
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
-                  <Link
-                    className="nav-link"
-                    aria-current="page"
-                    to={`/account/profile/${user._id}`}
-                  >
-                    Hello {user.firstName}
-                  </Link>
-                </li>
-              </ul>
+              <DropdownComponent user={user} />
             </div>
           ) : null}
         </div>
