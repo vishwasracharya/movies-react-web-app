@@ -27,7 +27,12 @@ const MovieDetails = () => {
   const handleDeleteMovie = (e) => {
     e.preventDefault();
     axios
-      .delete(`/api/delete-movie/${id}`)
+      .delete(`/api/delete-movie/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((res) => {
         console.log(res);
         if (res.status === 200) {

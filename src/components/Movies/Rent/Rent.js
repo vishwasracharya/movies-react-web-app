@@ -11,18 +11,24 @@ export const Rent = () => {
   const [rented, setRented] = useState(false);
 
   const user = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
   const { id } = useParams();
   const dispatch = useDispatch();
   const { movie } = useSelector((state) => state.movieDetails);
 
   const rentMovie = useCallback(async () => {
     try {
-      await axios.post(`/api/rent-movie/${id}/${user._id}`);
+      await axios.post(`/api/rent-movie/${id}/${user._id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      });
       setRented(true);
     } catch (error) {
       console.log(error);
     }
-  }, [id, user._id]);
+  }, [id, user._id, token]);
 
   useEffect(() => {
     dispatch(getMovieDetails(id));

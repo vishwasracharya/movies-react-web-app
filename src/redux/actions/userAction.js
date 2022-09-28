@@ -3,6 +3,9 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGOUT_SUCCESS,
   USER_LOGIN_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants.js";
 import axios from "axios";
@@ -102,4 +105,26 @@ const clearErrors = () => async (dispatch) => {
   });
 };
 
-export { signIn, signUp, logout, clearErrors };
+const getUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_DETAILS_REQUEST });
+    const data = await axios.get(`/api/user/profile/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    console.log("TR", data);
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    console.log("FA", error);
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export { signIn, signUp, logout, clearErrors, getUser };

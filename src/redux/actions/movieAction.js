@@ -14,7 +14,11 @@ export const getMovies = () => async (dispatch) => {
   try {
     dispatch({ type: MOVIE_LIST_REQUEST });
 
-    const { data } = await axios.get(`/api/all-movies`);
+    const { data } = await axios.get(`/api/all-movies`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     dispatch({
       type: MOVIE_LIST_SUCCESS,
       payload: data,
@@ -32,7 +36,11 @@ export const getMovieDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: MOVIE_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/movie/${id}`);
+    const { data } = await axios.get(`/api/movie/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     dispatch({
       type: MOVIE_DETAILS_SUCCESS,
       payload: data,
@@ -56,7 +64,11 @@ export const getUserDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: MOVIE_LIST_REQUEST });
 
-    const { data } = await axios.get(`/api/user/${id}`);
+    const { data } = await axios.get(`/api/user/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     // console.log("TR", data);
     dispatch({
       type: MOVIE_LIST_SUCCESS,

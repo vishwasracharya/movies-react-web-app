@@ -14,6 +14,7 @@ import { Rent as MovieRent } from "./components/Movies/Rent/Rent.js";
 
 import { UserDetails } from "./components/Users/UserDetails/UserDetails.js";
 import { AllUsers } from "./components/Users/AllUsers/AllUsers.js";
+import UserProfile from "./components/Users/UserProfile/UserProfile.js";
 
 import { Test } from "./components/Test.js";
 
@@ -37,6 +38,8 @@ function App() {
 
         <Route path="/account/:id" element={<UserDetails />} />
         <Route path="/account/users" element={<AllUsers />} />
+        <Route path="/account/profile/:id" element={<UserProfile />} />
+
         <Route path="/test" element={<Test />} />
         <Route path="/random" element={<Random />} />
 

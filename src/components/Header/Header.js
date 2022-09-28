@@ -91,7 +91,11 @@ const Header = () => {
             <div className="d-flex">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <Link className="nav-link" aria-current="page" to={`/account/${user._id}`}>
+                  <Link
+                    className="nav-link"
+                    aria-current="page"
+                    to={`/account/profile/${user._id}`}
+                  >
                     Hello {user.firstName}
                   </Link>
                 </li>

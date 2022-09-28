@@ -3,6 +3,9 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGOUT_SUCCESS,
   USER_LOGIN_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants.js";
 
@@ -38,4 +41,19 @@ const userReducer = (state = initialState, action) => {
   }
 };
 
-export { userReducer };
+const userDetailsReducer = (state = { user: {} }, action) => {
+  switch (action.type) {
+    case USER_DETAILS_REQUEST:
+      return { ...state, loading: true };
+    case USER_DETAILS_SUCCESS:
+      return { loading: false, user: action.payload.user, moviesCount: action.payload.moviesCount };
+    case USER_DETAILS_FAIL:
+      return { ...state, error: action.payload };
+    case CLEAR_ERRORS:
+      return { ...state, error: null };
+    default:
+      return state;
+  }
+};
+
+export { userReducer, userDetailsReducer };

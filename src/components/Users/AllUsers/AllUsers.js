@@ -1,19 +1,25 @@
 import React, { Fragment, useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 
 import { Auth } from "../../../controllers/auth.js";
 
+import Error from "../../Error/Error.js";
+
 const AllUsers = () => {
-  const auth = Auth();
+  const [auth, setAuth] = useState(Auth());
   const [users, setUsers] = useState([]);
 
   const fetchUsers = useCallback(async () => {
     try {
-      const response = await axios.get("/api/all-users");
+      const response = await axios.get("/api/all-users", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setUsers(response.data);
     } catch (error) {
-      console.log(error);
+      setAuth(false);
     }
   }, []);
 
@@ -23,7 +29,11 @@ const AllUsers = () => {
 
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`/account/delete/${id}`);
+      await axios.delete(`/account/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       fetchUsers();
     } catch (error) {
       console.log(error);
@@ -123,7 +133,7 @@ const AllUsers = () => {
           )}
         </Fragment>
       ) : (
-        <Navigate to="/auth/signin" />
+        <Error />
       )}
     </Fragment>
   );
