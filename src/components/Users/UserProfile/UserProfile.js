@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useCallback, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 import { Auth } from "../../../controllers/auth.js";
 import { getUser } from "../../../redux/actions/userAction.js";
