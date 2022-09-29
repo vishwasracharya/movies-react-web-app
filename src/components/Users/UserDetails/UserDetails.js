@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams, Navigate } from "react-router-dom";
 
 import { Auth } from "../../../controllers/auth.js";
-import { getUserDetails } from "../../../redux/actions/movieAction.js";
+import { getUser } from "../../../redux/actions/userAction.js";
 
 import Movie from "../Movie/Movie.js";
 import Metadata from "../../Metadata/Metadata.js";
@@ -13,10 +13,13 @@ const UserDetails = () => {
   const auth = Auth();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { movies, loading } = useSelector((state) => state.movies);
+  const { user, moviesCount, loading, movies } = useSelector(
+    (state) => state.userDetails
+  );
+  console.log("moviesCount", moviesCount);
 
   useEffect(() => {
-    dispatch(getUserDetails(id));
+    dispatch(getUser(id));
   }, [dispatch, id]);
 
   return (
@@ -28,19 +31,18 @@ const UserDetails = () => {
             <Loader />
           ) : (
             <Fragment>
-              {movies.movies ? (
+              {moviesCount > 0 ? (
                 <section className="my-5">
                   <div className="container">
                     <div className="row">
-                      {movies.movies &&
-                        movies.movies.map((movie) => (
-                          <div
-                            key={movie._id}
-                            className="col-12 col-md-6 col-lg-3 mb-4 mx-auto mx-md-0"
-                          >
-                            <Movie movie={movie} isRented={true} />
-                          </div>
-                        ))}
+                      {movies.map((movie) => (
+                        <div
+                          key={movie._id}
+                          className="col-12 col-md-6 col-lg-3 mb-4 mx-auto mx-md-0"
+                        >
+                          <Movie movie={movie} isRented={true} moviesCount={moviesCount} user={user} />
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </section>

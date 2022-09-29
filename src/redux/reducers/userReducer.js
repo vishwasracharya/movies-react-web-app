@@ -46,7 +46,7 @@ const userDetailsReducer = (state = { user: {} }, action) => {
     case USER_DETAILS_REQUEST:
       return { ...state, loading: true };
     case USER_DETAILS_SUCCESS:
-      return { loading: false, user: action.payload.user, moviesCount: action.payload.moviesCount };
+      return { loading: false, user: action.payload.user, moviesCount: action.payload.moviesCount, movies: action.payload.movies };
     case USER_DETAILS_FAIL:
       return { ...state, error: action.payload };
     case CLEAR_ERRORS:

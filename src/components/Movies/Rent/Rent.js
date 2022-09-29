@@ -20,10 +20,10 @@ export const Rent = () => {
 
   const rentMovie = useCallback(async () => {
     try {
-      await axios.post(`${API_URL}/api/rent-movie/${id}/${user._id}`, {
+      await axios.post(`${API_URL}/api/rent-movie/${id}/${user._id}`, {}, {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       setRented(true);

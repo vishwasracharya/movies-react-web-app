@@ -31,7 +31,7 @@ const AllUsers = () => {
 
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`/account/delete/${id}`, {
+      await axios.delete(`${API_URL}/account/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

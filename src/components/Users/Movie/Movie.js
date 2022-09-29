@@ -1,27 +1,24 @@
 import React, { useCallback, useState } from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 import API_URL from "../../../helpers/ApiUrl.js";
 
-const Movie = ({ movie, isRented }) => {
-  const { movies } = useSelector((state) => state.movies);
-
-  const movieLength = movies.movies.length;
-  console.log(movieLength);
-
-  const [movieLengthState, setMovieLengthState] = useState(movieLength);
-
+const Movie = ({ movie, isRented, moviesCount, user }) => {
+  const [movieLengthState, setMovieLengthState] = useState(moviesCount);
   const returnMovie = useCallback(async () => {
     try {
-      await axios.post(`${API_URL}/api/return-movie/${movie._id}/${movies._id}`);
+      await axios.post(`${API_URL}/api/return-movie/${movie._id}/${user._id}`, {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setMovieLengthState(movieLengthState - 1);
       window.location.reload();
     } catch (error) {
       console.log(error);
     }
-  }, [movie._id, movies._id, movieLengthState]);
+  }, [movie._id, user._id, movieLengthState]);
 
   const handleReturn = (e) => {
     e.preventDefault();
