@@ -48,7 +48,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://192.168.0.153:3001",
+  "proxy": "https://movies-node-web-app.herokuapp.com",
   "devDependencies": {
     "gh-pages": "^4.0.0"
   }
