@@ -1,10 +1,20 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../redux/actions/userAction";
+import { useForm } from "react-hook-form";
 
 import { Auth } from "../../controllers/auth.js";
 
+import { RequiredMark } from "../BasicComponents/RequiredMark";
+import { RequiredErrorMsg } from "../BasicComponents/RequiredErrorMsg";
+
 const Signin = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const auth = Auth();
   const dispatch = useDispatch();
 
@@ -15,8 +25,7 @@ const Signin = () => {
   const [loginEmail, setloginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     dispatch(signIn(loginEmail, loginPassword));
   };
 
@@ -38,32 +47,32 @@ const Signin = () => {
                   Enter Credentials
                 </h2>
               </div>
-              <form action="/auth/signin" method="post" onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group mb-3">
-                  <label htmlFor="email">Email address</label>
+                  <label htmlFor="email">Email address <RequiredMark /></label>
                   <input
                     type="email"
-                    className="form-control"
+                    className="form-control mb-2"
                     id="email"
                     name="email"
                     placeholder="Enter Email address"
-                    value={loginEmail}
+                    {...register("email", { required: true })}
                     onChange={(e) => setloginEmail(e.target.value)}
-                    required
                   />
+                  <RequiredErrorMsg errors={errors} name="email" />
                 </div>
                 <div className="form-group mb-3">
-                  <label htmlFor="password">Password</label>
+                  <label htmlFor="password">Password <RequiredMark /></label>
                   <input
                     type="password"
-                    className="form-control"
+                    className="form-control mb-2"
                     id="password"
                     name="password"
                     placeholder="Enter Password"
-                    value={loginPassword}
+                    {...register("password", { required: true })}
                     onChange={(e) => setLoginPassword(e.target.value)}
-                    required
                   />
+                  <RequiredErrorMsg errors={errors} name="password" />
                 </div>
                 <button
                   type="submit"
