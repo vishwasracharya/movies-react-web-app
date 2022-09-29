@@ -6,6 +6,7 @@ import axios from "axios";
 
 import { getMovieDetails } from "../../../redux/actions/movieAction.js";
 import Metadata from "../../Metadata/Metadata.js";
+import API_URL from "../../../helpers/ApiUrl.js";
 
 const MovieDetails = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -28,7 +29,7 @@ const MovieDetails = () => {
   const handleDeleteMovie = (e) => {
     e.preventDefault();
     axios
-      .delete(`/api/delete-movie/${id}`, {
+      .delete(`${API_URL}/api/delete-movie/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 
 import { getMovieDetails } from "../../../redux/actions/movieAction.js";
 import Metadata from "../../Metadata/Metadata.js";
+import API_URL from "../../../helpers/ApiUrl.js";
 
 export const Edit = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -39,7 +40,7 @@ export const Edit = () => {
   const updateMovie = useCallback(async () => {
     axios
       .post(
-        `/api/edit-movie/${id}`,
+        `${API_URL}/api/edit-movie/${id}`,
         {
           title: title.current.value,
           description: description.current.value,

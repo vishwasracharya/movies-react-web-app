@@ -10,11 +10,13 @@ import {
 } from "../constants/userConstants.js";
 import axios from "axios";
 
+import API_URL from "../../helpers/ApiUrl.js";
+
 const signIn = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });
     const data = await axios.post(
-      "/auth/signin",
+      `${API_URL}/auth/signin`,
       { email, password },
       {
         headers: {
@@ -52,7 +54,7 @@ const signUp = (firstName, lastName, email, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });
     const data = await axios.post(
-      "/auth/signup",
+      `${API_URL}/auth/signup`,
       { firstName, lastName, email, password },
       {
         headers: {
@@ -108,7 +110,7 @@ const clearErrors = () => async (dispatch) => {
 const getUser = (id) => async (dispatch) => {
   try {
     dispatch({ type: USER_DETAILS_REQUEST });
-    const data = await axios.get(`/api/user/profile/${id}`, {
+    const data = await axios.get(`${API_URL}/api/user/profile/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

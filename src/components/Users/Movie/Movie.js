@@ -1,7 +1,9 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
+
+import API_URL from "../../../helpers/ApiUrl.js";
 
 const Movie = ({ movie, isRented }) => {
   const { movies } = useSelector((state) => state.movies);
@@ -13,7 +15,7 @@ const Movie = ({ movie, isRented }) => {
 
   const returnMovie = useCallback(async () => {
     try {
-      await axios.post(`/api/return-movie/${movie._id}/${movies._id}`);
+      await axios.post(`${API_URL}/api/return-movie/${movie._id}/${movies._id}`);
       setMovieLengthState(movieLengthState - 1);
       window.location.reload();
     } catch (error) {

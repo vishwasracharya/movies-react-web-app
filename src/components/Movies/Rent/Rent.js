@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { getMovieDetails } from "../../../redux/actions/movieAction.js";
 import { getUserDetails } from "../../../redux/actions/movieAction.js";
 import Metadata from "../../Metadata/Metadata.js";
+import API_URL from "../../../helpers/ApiUrl.js";
 
 export const Rent = () => {
   const [rented, setRented] = useState(false);
@@ -19,7 +20,7 @@ export const Rent = () => {
 
   const rentMovie = useCallback(async () => {
     try {
-      await axios.post(`/api/rent-movie/${id}/${user._id}`, {
+      await axios.post(`${API_URL}/api/rent-movie/${id}/${user._id}`, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,

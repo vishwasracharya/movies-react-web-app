@@ -9,12 +9,14 @@ import {
   CLEAR_ERRORS,
 } from "../constants/movieConstants.js";
 
+import API_URL from "../../helpers/ApiUrl.js";
+
 // Get all movies
 export const getMovies = () => async (dispatch) => {
   try {
     dispatch({ type: MOVIE_LIST_REQUEST });
 
-    const { data } = await axios.get(`/api/all-movies`, {
+    const { data } = await axios.get(`${API_URL}/api/all-movies`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -36,7 +38,7 @@ export const getMovieDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: MOVIE_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/movie/${id}`, {
+    const { data } = await axios.get(`${API_URL}/api/movie/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -64,7 +66,7 @@ export const getUserDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: MOVIE_LIST_REQUEST });
 
-    const { data } = await axios.get(`/api/user/${id}`, {
+    const { data } = await axios.get(`${API_URL}/api/user/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

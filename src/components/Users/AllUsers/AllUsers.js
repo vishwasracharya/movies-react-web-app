@@ -3,6 +3,7 @@ import axios from "axios";
 // import { Navigate } from "react-router-dom";
 
 import { Auth } from "../../../controllers/auth.js";
+import API_URL from "../../../helpers/ApiUrl.js";
 
 import Error from "../../Error/Error.js";
 import Metadata from "../../Metadata/Metadata.js";
@@ -13,7 +14,7 @@ const AllUsers = () => {
 
   const fetchUsers = useCallback(async () => {
     try {
-      const response = await axios.get("/api/all-users", {
+      const response = await axios.get(`${API_URL}/api/all-users`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

@@ -4,6 +4,7 @@ import { Navigate, useParams } from "react-router-dom";
 
 import { Auth } from "../../../controllers/auth.js";
 import { getUser } from "../../../redux/actions/userAction.js";
+import API_URL from "../../../helpers/ApiUrl.js";
 
 import MoviesView from "./moviesView.js";
 import axios from "axios";
@@ -27,7 +28,7 @@ const UserProfile = () => {
     const data = Object.fromEntries(formData);
     axios
       .put(
-        `/api/user/${id}`,
+        `${API_URL}/api/user/${id}`,
         {
           firstName: data.firstName,
           lastName: data.lastName,
@@ -54,7 +55,7 @@ const UserProfile = () => {
     console.log(data);
     axios
       .put(
-        `/api/user/password/${id}`,
+        `${API_URL}/api/user/password/${id}`,
         {
           oldPassword: data.oldPassword,
           newPassword: data.newPassword,

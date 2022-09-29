@@ -4,6 +4,8 @@ import { Navigate } from "react-router-dom";
 
 import { Auth } from "../../../controllers/auth.js";
 import Metadata from "../../Metadata/Metadata.js";
+import API_URL from "../../../helpers/ApiUrl.js";
+
 
 export const Add = () => {
   const auth = Auth();
@@ -41,7 +43,7 @@ export const Add = () => {
     console.log(NewMovie);
 
     axios
-      .post("/api/add-movie", NewMovie, {
+      .post(`${API_URL}/api/add-movie`, NewMovie, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
