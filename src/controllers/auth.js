@@ -1,6 +1,8 @@
+import { getCookie } from "../helpers/getCookie";
 
 const Auth = () => {
-    return localStorage.getItem('token') ? true : false;
+  return getCookie("token") == null ? true : false;
+  //   return localStorage.getItem("token") ? true : false;
 };
 
 export { Auth };
