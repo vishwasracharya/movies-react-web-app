@@ -5,6 +5,7 @@ import ReactStars from "react-rating-stars-component";
 import axios from "axios";
 
 import { getMovieDetails } from "../../../redux/actions/movieAction.js";
+import Metadata from "../../Metadata/Metadata.js";
 
 const MovieDetails = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -46,6 +47,7 @@ const MovieDetails = () => {
 
   return (
     <Fragment>
+      <Metadata title={movie.title} />
       <section className="my-5">
         <div className="container">
           <div className="row">

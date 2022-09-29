@@ -7,6 +7,7 @@ import { Auth } from "../../controllers/auth.js";
 
 import { RequiredMark } from "../BasicComponents/RequiredMark";
 import { RequiredErrorMsg } from "../BasicComponents/RequiredErrorMsg";
+import Metadata from "../Metadata/Metadata";
 
 const Signin = () => {
   const {
@@ -37,6 +38,7 @@ const Signin = () => {
 
   return (
     <Fragment>
+      <Metadata title="Sign In" />
       <section className="my-5">
         <div className="container">
           <div className="row">

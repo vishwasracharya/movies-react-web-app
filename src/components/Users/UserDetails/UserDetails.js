@@ -21,13 +21,13 @@ const UserDetails = () => {
 
   return (
     <Fragment>
+      <Metadata title="My Movies" />
       {auth ? (
         <Fragment>
           {loading ? (
             <Loader />
           ) : (
             <Fragment>
-              <Metadata title="Home | Vishwas Acharya" />
               {movies.movies ? (
                 <section className="my-5">
                   <div className="container">

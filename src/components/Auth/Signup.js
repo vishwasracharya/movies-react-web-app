@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { Auth } from "../../controllers/auth.js";
 import { RequiredErrorMsg } from "../BasicComponents/RequiredErrorMsg";
 import { RequiredMark } from "../BasicComponents/RequiredMark";
+import Metadata from "../Metadata/Metadata";
 
 const Signup = () => {
   const {
@@ -47,6 +48,7 @@ const Signup = () => {
 
   return (
     <Fragment>
+      <Metadata title="Sign Up" />
       <section className="my-5">
         <div className="container">
           <div className="row">

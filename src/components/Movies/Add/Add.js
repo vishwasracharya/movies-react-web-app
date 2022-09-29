@@ -3,6 +3,7 @@ import React, { Fragment, useRef } from "react";
 import { Navigate } from "react-router-dom";
 
 import { Auth } from "../../../controllers/auth.js";
+import Metadata from "../../Metadata/Metadata.js";
 
 export const Add = () => {
   const auth = Auth();
@@ -59,6 +60,7 @@ export const Add = () => {
 
   return (
     <Fragment>
+      <Metadata title="Add Movie" />
       {auth ? (
         <section className="my-5">
           <div className="container">

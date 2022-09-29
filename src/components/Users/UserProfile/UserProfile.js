@@ -7,6 +7,7 @@ import { getUser } from "../../../redux/actions/userAction.js";
 
 import MoviesView from "./moviesView.js";
 import axios from "axios";
+import Metadata from "../../Metadata/Metadata.js";
 
 const UserProfile = () => {
   const auth = Auth();
@@ -75,6 +76,7 @@ const UserProfile = () => {
 
   return (
     <Fragment>
+      <Metadata title="User Profile" />
       {auth ? (
         <Fragment>
           <section className="my-5">

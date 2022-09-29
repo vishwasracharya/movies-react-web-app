@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 
 import { getMovieDetails } from "../../../redux/actions/movieAction.js";
 import { getUserDetails } from "../../../redux/actions/movieAction.js";
+import Metadata from "../../Metadata/Metadata.js";
 
 export const Rent = () => {
   const [rented, setRented] = useState(false);
@@ -42,6 +43,7 @@ export const Rent = () => {
 
   return (
     <Fragment>
+      <Metadata title="Rent Movie" />
       <section className="my-5">
         <div className="container">
           <div className="row">

@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { getMovieDetails } from "../../../redux/actions/movieAction.js";
+import Metadata from "../../Metadata/Metadata.js";
 
 export const Edit = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -88,6 +89,7 @@ export const Edit = () => {
 
   return (
     <Fragment>
+      <Metadata title="Edit Movie" />
       <section className="my-5">
         <div className="container">
           <div className="row">

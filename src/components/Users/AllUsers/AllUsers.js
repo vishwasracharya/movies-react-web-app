@@ -5,6 +5,7 @@ import axios from "axios";
 import { Auth } from "../../../controllers/auth.js";
 
 import Error from "../../Error/Error.js";
+import Metadata from "../../Metadata/Metadata.js";
 
 const AllUsers = () => {
   const [auth, setAuth] = useState(Auth());
@@ -42,6 +43,7 @@ const AllUsers = () => {
 
   return (
     <Fragment>
+      <Metadata title="All Users" />
       {auth ? (
         <Fragment>
           {users ? (
